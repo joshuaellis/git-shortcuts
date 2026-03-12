@@ -13,7 +13,7 @@ git config --global alias.save '!f() { git add -A && git commit -m "$*"; }; f'
 git config --global alias.modify '!f() { if [ "$1" = "-A" ]; then git add -A; else git add -u; fi && git commit --amend --no-edit; }; f'
 
 # submit — push, open/create draft PR
-git config --global alias.submit '!f() { git push -u origin HEAD --force-with-lease && if gh pr view HEAD --json url >/dev/null 2>&1; then gh pr view HEAD --web; else gh pr create --fill --web --draft; fi; }; f'
+git config --global alias.submit '!f() { git push -u origin HEAD --force-with-lease && if gh pr view HEAD --json url >/dev/null 2>&1; then gh pr view HEAD --web; else gh pr create --fill --draft && gh pr view HEAD --web; fi; }; f'
 
 # sync — fetch and rebase onto origin/main
 git config --global alias.sync '!git fetch origin && git rebase origin/main'
