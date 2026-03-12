@@ -25,7 +25,18 @@ curl -sSL https://raw.githubusercontent.com/joshuaellis/git-shortcuts/main/unins
 | `git submit`                    | Push and open/create a draft PR in the browser   |
 | `git sync`                      | Fetch origin and rebase onto `origin/main`       |
 
+## Extras
+
+### delta
+
+If [delta](https://github.com/dandavison/delta) is detected during install, git is automatically configured to use it as the pager with side-by-side, syntax-highlighted diffs.
+
+```bash
+brew install git-delta
+```
+
 ## Requirements
 
 - [git](https://git-scm.com/)
 - [gh](https://cli.github.com/) (GitHub CLI) — required for `git submit`
+- [delta](https://github.com/dandavison/delta) (optional) — better diffs
