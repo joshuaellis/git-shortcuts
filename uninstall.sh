@@ -8,6 +8,9 @@ git config --global --unset alias.save 2>/dev/null || true
 git config --global --unset alias.modify 2>/dev/null || true
 git config --global --unset alias.submit 2>/dev/null || true
 git config --global --unset alias.sync 2>/dev/null || true
+git config --global --unset alias.up 2>/dev/null || true
+git config --global --unset alias.down 2>/dev/null || true
+git config --global --unset alias.stack 2>/dev/null || true
 
 # delta config
 git config --global --unset core.pager 2>/dev/null || true

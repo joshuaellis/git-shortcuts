@@ -16,14 +16,31 @@ curl -sSL https://raw.githubusercontent.com/joshuaellis/git-shortcuts/main/unins
 
 ## Commands
 
-| Command                         | Description                                      |
-| ------------------------------- | ------------------------------------------------ |
-| `git create <branch> <message>` | Create a new branch, stage all files, and commit |
-| `git save <message>`            | Stage all files and commit                       |
-| `git modify`                    | Stage tracked files and amend the last commit    |
-| `git modify -A`                 | Stage all files (including untracked) and amend  |
-| `git submit`                    | Push and open/create a draft PR in the browser   |
-| `git sync`                      | Fetch origin and rebase onto `origin/main`       |
+| Command                         | Description                                        |
+| ------------------------------- | -------------------------------------------------- |
+| `git create <branch> <message>` | Create a new branch, stage all files, and commit   |
+| `git save <message>`            | Stage all files and commit                         |
+| `git modify`                    | Stage tracked files and amend the last commit      |
+| `git modify -A`                 | Stage all files (including untracked) and amend    |
+| `git submit`                    | Push and open/create a draft PR in the browser     |
+| `git sync`                      | Fetch origin and rebase onto `origin/main`         |
+| `git up`                        | Move to child branch in the stack                  |
+| `git down`                      | Move to parent branch in the stack                 |
+| `git stack`                     | Show the current branch stack                      |
+
+## Stacking
+
+`git create` automatically tracks the parent branch so you can navigate stacked PRs:
+
+```
+main
+  └── feat/auth        ← git create feat/auth "feat: add auth"
+        └── feat/login ← git create feat/login "feat: add login page"
+```
+
+- `git down` — move to the parent branch
+- `git up` — move to a child branch (prompts if multiple children exist)
+- `git stack` — print the full stack, highlighting the current branch
 
 ## Extras
 
