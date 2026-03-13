@@ -21,8 +21,8 @@ git config --global alias.save '!f() { git add -A && git commit -m "$*"; }; f'
 # modify [-A] — amend last commit (tracked files only, or -A for all)
 git config --global alias.modify '!f() { if [ "$1" = "-A" ]; then git add -A; else git add -u; fi && git commit --amend --no-edit; }; f'
 
-# submit — push, open/create draft PR (uses repo PR template if found)
-git config --global alias.submit '!f() { git push -u origin HEAD --force-with-lease && if gh pr view --json url >/dev/null 2>&1; then gh pr view --web; else tpl=""; for p in .github/pull_request_template.md .github/PULL_REQUEST_TEMPLATE.md pull_request_template.md docs/pull_request_template.md; do if [ -f "$p" ]; then tpl="$p"; break; fi; done; if [ -n "$tpl" ]; then gh pr create --fill --body-file "$tpl" --draft; else gh pr create --fill --draft; fi && gh pr view --web; fi; }; f'
+# submit — push, open/create PR (uses repo PR template if found)
+git config --global alias.submit '!f() { draft=""; if [ "$1" = "--draft" ]; then draft="--draft"; fi; git push -u origin HEAD --force-with-lease && if gh pr view --json url >/dev/null 2>&1; then gh pr view --web; else tpl=""; for p in .github/pull_request_template.md .github/PULL_REQUEST_TEMPLATE.md pull_request_template.md docs/pull_request_template.md; do if [ -f "$p" ]; then tpl="$p"; break; fi; done; if [ -n "$tpl" ]; then gh pr create --fill --body-file "$tpl" $draft; else gh pr create --fill $draft; fi && gh pr view --web; fi; }; f'
 
 # sync — fetch and rebase onto origin/main
 git config --global alias.sync '!git fetch origin && git rebase origin/main'
@@ -49,7 +49,7 @@ echo "Done! The following git commands are now available:"
 echo "  git create <branch> <message>  — new branch + commit"
 echo "  git save <message>             — stage all + commit"
 echo "  git modify [-A]                — amend last commit"
-echo "  git submit                     — push + open/create draft PR"
+echo "  git submit [--draft]           — push + open/create PR"
 echo "  git sync                       — rebase onto origin/main"
 echo "  git up                         — move to child branch in stack"
 echo "  git down                       — move to parent branch in stack"

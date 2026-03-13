@@ -22,7 +22,8 @@ curl -sSL https://raw.githubusercontent.com/joshuaellis/git-shortcuts/main/unins
 | `git save <message>`            | Stage all files and commit                         |
 | `git modify`                    | Stage tracked files and amend the last commit      |
 | `git modify -A`                 | Stage all files (including untracked) and amend    |
-| `git submit`                    | Push and open/create a draft PR in the browser     |
+| `git submit`                    | Push and open/create a PR in the browser           |
+| `git submit --draft`            | Same as above, but creates the PR as a draft       |
 | `git sync`                      | Fetch origin and rebase onto `origin/main`         |
 | `git up`                        | Move to child branch in the stack                  |
 | `git down`                      | Move to parent branch in the stack                 |
