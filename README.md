@@ -25,6 +25,7 @@ curl -sSL https://raw.githubusercontent.com/joshuaellis/git-shortcuts/main/unins
 | `git submit`                    | Push and open/create a PR in the browser           |
 | `git submit --draft`            | Same as above, but creates the PR as a draft       |
 | `git sync`                      | Fetch origin and rebase onto `origin/main`         |
+| `git go [query]`                | Interactive branch checkout (fuzzy or numbered)    |
 | `git up`                        | Move to child branch in the stack                  |
 | `git down`                      | Move to parent branch in the stack                 |
 | `git stack`                     | Show the current branch stack                      |
@@ -57,4 +58,5 @@ brew install git-delta
 
 - [git](https://git-scm.com/)
 - [gh](https://cli.github.com/) (GitHub CLI) — required for `git submit`
+- [fzf](https://github.com/junegunn/fzf) (optional) — fuzzy finder for `git go`
 - [delta](https://github.com/dandavison/delta) (optional) — better diffs

@@ -15,6 +15,9 @@ git config --global alias.up '!f() { current=$(git branch --show-current); child
 # stack — show the current branch stack
 git config --global alias.stack '!f() { current=$(git branch --show-current); branch="$current"; stack=""; while [ -n "$branch" ]; do stack="$branch\n$stack"; parent=$(git config branch."$branch".parent 2>/dev/null) || true; if [ -z "$parent" ]; then break; fi; branch="$parent"; done; printf "%b" "$stack" | while IFS= read -r b; do [ -z "$b" ] && continue; if [ "$b" = "$current" ]; then printf "* %s\n" "$b"; else printf "  %s\n" "$b"; fi; done; }; f'
 
+# go [query] — interactive branch checkout (fzf if available, numbered fallback)
+git config --global alias.go '!f() { current=$(git branch --show-current); branches=$(git for-each-ref refs/heads --sort=-committerdate --format="%(refname:short)|%(committerdate:relative)|%(subject)" | grep -v "^${current}|"); if [ -z "$branches" ]; then echo "No other branches."; exit 0; fi; display=$(echo "$branches" | sed "s/|/  (/;s/|/)  /"); if command -v fzf >/dev/null 2>&1; then selected=$(echo "$display" | fzf --query="${1:-}" --select-1 --exit-0 | cut -d" " -f1); else if [ -n "$1" ]; then display=$(echo "$display" | grep -i "$1"); fi; if [ -z "$display" ]; then echo "No branches matching \"$1\"."; exit 0; fi; count=$(echo "$display" | wc -l | tr -d " "); if [ "$count" -eq 1 ]; then selected=$(echo "$display" | cut -d" " -f1); else echo "$display" | nl -ba; printf "Choose [1-%s]: " "$count"; read n; selected=$(echo "$display" | sed -n "${n}p" | cut -d" " -f1); fi; fi; if [ -n "$selected" ]; then git checkout "$selected"; fi; }; f'
+
 # save <message> — stage all, new commit
 git config --global alias.save '!f() { git add -A && git commit -m "$*"; }; f'
 
@@ -53,4 +56,5 @@ echo "  git submit [--draft]           — push + open/create PR"
 echo "  git sync                       — rebase onto origin/main"
 echo "  git up                         — move to child branch in stack"
 echo "  git down                       — move to parent branch in stack"
+echo "  git go [query]                 — interactive branch checkout"
 echo "  git stack                      — show current branch stack"
