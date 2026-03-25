@@ -43,6 +43,7 @@ main
 - `git down` — move to the parent branch
 - `git up` — move to a child branch (prompts if multiple children exist)
 - `git stack` — print the full stack, highlighting the current branch
+- `git submit` — automatically targets the parent branch as the PR base
 
 ## Extras
 
