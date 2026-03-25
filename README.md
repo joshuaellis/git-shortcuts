@@ -24,7 +24,7 @@ curl -sSL https://raw.githubusercontent.com/joshuaellis/git-shortcuts/main/unins
 | `git modify -A`                 | Stage all files (including untracked) and amend    |
 | `git submit`                    | Push and open/create a PR in the browser           |
 | `git submit --draft`            | Same as above, but creates the PR as a draft       |
-| `git sync`                      | Fetch origin and rebase onto `origin/main`         |
+| `git sync`                      | Rebase onto parent branch (or `origin/main`)       |
 | `git go [query]`                | Interactive branch checkout (fuzzy or numbered)    |
 | `git up`                        | Move to child branch in the stack                  |
 | `git down`                      | Move to parent branch in the stack                 |
@@ -43,6 +43,7 @@ main
 - `git down` — move to the parent branch
 - `git up` — move to a child branch (prompts if multiple children exist)
 - `git stack` — print the full stack, highlighting the current branch
+- `git sync` — rebases onto the parent branch (falls back to `origin/main`)
 - `git submit` — automatically targets the parent branch as the PR base
 
 ## Extras

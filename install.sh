@@ -27,8 +27,8 @@ git config --global alias.modify '!f() { if [ "$1" = "-A" ]; then git add -A; el
 # submit — push, open/create PR (targets parent branch in stack, uses repo PR template if found)
 git config --global alias.submit '!f() { draft=""; if [ "$1" = "--draft" ]; then draft="--draft"; fi; current=$(git branch --show-current); parent=$(git config branch."$current".parent 2>/dev/null) || true; base=""; if [ -n "$parent" ]; then base="--base $parent"; fi; git push -u origin HEAD --force-with-lease && if gh pr view --json url >/dev/null 2>&1; then gh pr view --web; else tpl=""; for p in .github/pull_request_template.md .github/PULL_REQUEST_TEMPLATE.md pull_request_template.md docs/pull_request_template.md; do if [ -f "$p" ]; then tpl="$p"; break; fi; done; if [ -n "$tpl" ]; then gh pr create --fill --body-file "$tpl" $draft $base; else gh pr create --fill $draft $base; fi && gh pr view --web; fi; }; f'
 
-# sync — fetch and rebase onto origin/main
-git config --global alias.sync '!git fetch origin && git rebase origin/main'
+# sync — fetch and rebase onto parent branch (or origin/main if no parent)
+git config --global alias.sync '!f() { current=$(git branch --show-current); parent=$(git config branch."$current".parent 2>/dev/null) || true; if [ -n "$parent" ]; then git fetch origin && git rebase "origin/$parent"; else git fetch origin && git rebase origin/main; fi; }; f'
 
 # delta — better diffs
 if command -v delta >/dev/null 2>&1; then
@@ -53,7 +53,7 @@ echo "  git create <branch> <message>  — new branch + commit"
 echo "  git save <message>             — stage all + commit"
 echo "  git modify [-A]                — amend last commit"
 echo "  git submit [--draft]           — push + open/create PR"
-echo "  git sync                       — rebase onto origin/main"
+echo "  git sync                       — rebase onto parent branch (or origin/main)"
 echo "  git up                         — move to child branch in stack"
 echo "  git down                       — move to parent branch in stack"
 echo "  git go [query]                 — interactive branch checkout"
